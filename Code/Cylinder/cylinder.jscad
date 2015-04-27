@@ -1,18 +1,16 @@
-// title: OpenJSCAD.org Logo
-// author: Rene K. Mueller 
-// license: Creative Commons CC BY
-// URL: http://openjscad.org/#examples/logo.jscad
-// revision: 0.003
-// tags: Logo,Intersection,Sphere,Cube
+// title: Music Box Cylinder
+// author: Tiffany Lu
 
-// [pin number, length]
-// Generate pin number in Javascript probably
-// TODO: figure out how to indicate simultaneous notes...
-notes = [[1,0.25], [2,0.5], [3,0.25], [4,0.25], [5,0.25], [6,0.25], [7,0.25], [8,0.25]];
+// [comb-pin number, length]
+// Generate comb-pin number in Javascript probably
+notes = [[1,0], [2,1.0], [3,1.5], [4,2.0], [5,3.0], [6,4.0], [7,5.0], [8,7.0]];
 numnotes = 8;
+// number of measures
+songlength = 8.0;
 radius = 25;
-// whole note spacing
-hspacing = 60;
+// one measure spacing
+hspacing = 360/songlength;
+// comb-pin spacing
 vspacing = 10;
 
 function pin() {
@@ -24,8 +22,8 @@ function makePins() {
     var lastangle = 0;
     for(var i=0; i<numnotes; i++) {
         var pinnum = notes[i][0];
-        var length = notes[i][1];
-        var angle = lastangle + hspacing*length;
+        var time = notes[i][1];
+        var angle = hspacing*time;
         var x = cos(angle)*radius;
         var y = sin(angle)*radius;
         lastangle = angle;
@@ -36,7 +34,7 @@ function makePins() {
 }
 
 function makeCylinder() {
-    return cylinder({h:100, r:radius, $fn:128}).union(makePins());
+    return cylinder({h:100, r:radius}).union(makePins());
 }
 
 function main() {

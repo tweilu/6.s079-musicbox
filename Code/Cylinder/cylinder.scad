@@ -1,11 +1,13 @@
-// [pin number, length]
-// Generate pin number in Javascript probably
-// TODO: figure out how to indicate simultaneous notes...
-notes = [[1,0.25], [2,0.25], [3,0.25], [4,0.25], [5,0.25], [6,0.25], [7,0.25], [8,0.25]];
+// [comb-pin number, length]
+// Generate comb-pin number in Javascript probably
+notes = [[1,0], [2,1.0], [3,1.5], [4,2.0], [5,3.0], [6,4.0], [7,5.0], [8,7.0]];
 numnotes = 8;
+// number of measures
+songlength = 8.0;
 radius = 25;
-// whole note spacing
-hspacing = 60;
+// one measure spacing
+hspacing = 360/songlength;
+// comb-pin spacing
 vspacing = 10;
 
 module makeCylinder() {
@@ -13,8 +15,8 @@ module makeCylinder() {
         cylinder(h = 100, r = radius, $fn=128);
         for (i = [0:numnotes-1]) {
             pinnum = notes[i][0];
-            length = notes[i][1];
-            angle = hspacing*length*i;
+            time = notes[i][1];
+            angle = hspacing*time;
             x = cos(angle)*radius;
             y = sin(angle)*radius;
             translate([x,y,0]) {
