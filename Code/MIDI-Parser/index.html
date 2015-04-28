@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="stream.js"></script>
+	<script type="text/javascript" src="midifile.js"></script>
+</head>
+<body>
+	MIDI File Parser
+	<br/>
+	<input type="file" id="filereader"/>
+	<script>
+		document.getElementById("filereader").onchange = function(event) {
+		    var file = this.files[0];
+		    // console.log(file);
+		    var fileReader = new FileReader();
+			fileReader.onload = function() {
+			    var midiFile = MidiFile(this.result);
+			    processMidi(midiFile);
+			};
+			fileReader.readAsBinaryString(file);
+		}
+
+		var processMidi = function(midiFile) {
+			console.log(midiFile['header']);
+			console.log(midiFile['tracks']);
+		};
+	</script>
+<body>
+</html>
