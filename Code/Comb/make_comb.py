@@ -9,9 +9,11 @@ base_space = base_drawing.modelspace()
 
 #global variables
 #all units in inches
+kerf=0.0 #this should be half the thickness if we're using ponoko
 width = 3.0
 height = 1.25
-spacing = 1.0/32
+spacing = 1.0/32-2*(kerf/2)
+
 
 
 def line(space,*args):
