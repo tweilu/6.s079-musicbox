@@ -1,18 +1,20 @@
-// [comb-pin number, length]
+// [comb-pin number, time]
 // Generate comb-pin number in Javascript probably
-notes = [[1,0], [2,1.0], [3,1.5], [4,2.0], [5,3.0], [6,4.0], [7,5.0], [8,7.0]];
+notes = [[0,0], [1,1.0], [2,2.0], [3,2.0], [4,3.0], [5,4.0], [6,5.0], [7,7.0]];
 numnotes = 8;
 // number of measures
 songlength = 8.0;
-radius = 25;
 // one measure spacing
 hspacing = 360/songlength;
+
+radius = 25;
+height = 100;
 // comb-pin spacing
-vspacing = 10;
+vspacing = height/numnotes;
 
 module makeCylinder() {
     union() {
-        cylinder(h = 100, r = radius, $fn=128);
+        cylinder(h = height, r = radius, $fn=128);
         for (i = [0:numnotes-1]) {
             pinnum = notes[i][0];
             time = notes[i][1];
@@ -26,9 +28,13 @@ module makeCylinder() {
     }
 }
 
-// TODO: optimize pin shape
 module pin() {
-    cube(size = [10,5,vspacing], center = true);
+    //cube(size = [10,5,vspacing], center = true);
+    rotate([90,90,0]) trapezoid(vspacing, vspacing*3/5,8,3);
+}
+
+module trapezoid(width_base, width_top,height,thickness) {
+  translate([0,0,-thickness/2]) linear_extrude(height = thickness) polygon(points=[[-width_base/2,-height/2],[width_base/2,-height/2],[width_base/2-(width_base-width_top)/2,height/2],[-width_base/2+(width_base-width_top)/2,height/2]], paths=[[0,1,2,3]]);
 }
 
 makeCylinder();
