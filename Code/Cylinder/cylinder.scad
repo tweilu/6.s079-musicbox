@@ -11,8 +11,8 @@ songlength = 12.0;
 hspacing = 360/songlength;
 
 // cylinder params
-radius = 25;
-height = 80;
+radius = 25.4; //1 inch radius
+height = 76.2; //3 inch height
 // comb-pin spacing
 vspacing = height/numnotes;
 
@@ -33,20 +33,20 @@ module makeCylinder() {
 }
 
 module pin() {
-    //cube(size = [10,5,vspacing], center = true);
-    rotate([90,90,0]) trapezoid(vspacing, vspacing*0.5,7,1);
+    rotate([90,90,0]) trapezoid(vspacing, vspacing*0.5,6.35,1);
 }
 
 module trapezoid(width_base, width_top,height,thickness) {
   translate([0,0,-thickness/2]) linear_extrude(height = thickness) polygon(points=[[-width_base/2,-height/2],[width_base/2,-height/2],[width_base/2-(width_base-width_top)/2,height/2],[-width_base/2+(width_base-width_top)/2,height/2]], paths=[[0,1,2,3]]);
 }
 
-// TODO: figure out gear
 module completeCylinder() {
-    difference() {
-        makeCylinder();
-        translate([0,0,height-5]) cylinder(h=5.5,r1=0,r2=7);
-        translate([0,0,-0.5]) cylinder(h=5.5,r1=7,r2=0);
+    union() {
+        difference() {
+            makeCylinder();
+            cube(size=[6.73519,6.73519,12.7], center=true);
+        }
+        translate([0,0,height]) cylinder(h=4.7625,r=4.7625);
     }
 }
 
