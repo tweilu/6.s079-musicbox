@@ -21,9 +21,49 @@
 			fileReader.readAsBinaryString(file);
 		}
 
+		Array.prototype.getUnique = function(){
+		   var u = {}, a = [];
+		   for(var i = 0, l = this.length; i < l; ++i){
+		      if(u.hasOwnProperty(this[i])) {
+		         continue;
+		      }
+		      a.push(this[i]);
+		      u[this[i]] = 1;
+		   }
+		   return a;
+		}
+
 		var processMidi = function(midiFile) {
-			console.log(midiFile['header']);
-			console.log(midiFile['tracks']);
+			console.log(midiFile['header']['ticksPerBeat']);
+			var allNotes = [];
+			var noteTimePairs = [];
+			var events = midiFile['tracks'][1];
+			
+			// Get the note numbers for the comb
+			for (var i=0;i<events.length;i++) {
+				// just use 'noteOn' event because music box can't hold out notes
+				if (events[i].subtype === 'noteOn') {
+					// console.log(events[i]);
+					allNotes.push(events[i].noteNumber);
+				}
+			}
+			// All the note numbers for the comb!
+			var uniqueNotes = allNotes.getUnique().sort();
+			console.log(uniqueNotes);
+
+			// Get note, time pairs for the cylinder
+			var step = 0;
+			for (var i=0;i<events.length;i++) {
+				if (events[i].subtype === 'noteOn') {
+					evt = events[i];
+					step += evt.deltaTime/48; // TODO: FIGURE OUT HOW THE DELTA TIME STEPS WORK
+					noteTimePairs.push([uniqueNotes.indexOf(evt.noteNumber), step]);
+				}
+			}
+
+			// for (var i=0;i<noteTimePairs.length;i++) {
+			// 	console.log(noteTimePairs[i]);
+			// }
 		};
 	</script>
 <body>
