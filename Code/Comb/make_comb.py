@@ -12,7 +12,8 @@ base_space = base_drawing.modelspace()
 kerf=0.0 #this should be half the thickness if we're using ponoko
 width = 3.0
 height = 1.25
-spacing = 1.0/32-2*(kerf/2)
+tine_width = 3.0/32;
+#spacing = 
 
 
 
@@ -40,10 +41,10 @@ def tine(pitch, x, tine_width):
     polyline(modelspace,[(x,y),(x,height),(x+tine_width,height),(x+tine_width,y)])
     return y
 
-def make_comb(song_notes):#song_notes are midi note numbers (C4=60)
+def make_comb(song_notes,name):#song_notes are midi note numbers (C4=60)
     n = len(song_notes);
     notes = sorted(song_notes)
-    tine_width = (width-(n-1)*spacing)/n
+    spacing = (width-n*tine_width)/(n-1)
 
     y = tine(notes[0],0,tine_width)
     min_y = y
@@ -69,5 +70,7 @@ def make_comb(song_notes):#song_notes are midi note numbers (C4=60)
     base_space.add_circle((width/4,.25),.0669291,{'color': 0})
     base_space.add_circle((3*width/4,.5),.0669291,{'color': 0})
     
-    drawing.saveas('comb.dxf')
-    base_drawing.saveas('base.dxf')
+    drawing.saveas(str(name)+'_comb.dxf')
+    base_drawing.saveas(str(name)+'_base.dxf')
+
+make_comb(range(45,70),"dynspace")
