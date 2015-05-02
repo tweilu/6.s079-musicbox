@@ -49,21 +49,28 @@
 			}
 			// All the note numbers for the comb!
 			var uniqueNotes = allNotes.getUnique().sort();
-			console.log(uniqueNotes);
+			// console.log(uniqueNotes);
 
+			str = "";
+			for (var i=0; i<uniqueNotes.length; i++) {
+				var c = uniqueNotes[i].toString()+",";
+				str+=c;
+			}
+			console.log(str);
+
+			str = "";
 			// Get note, time pairs for the cylinder
 			var step = 0;
 			for (var i=0;i<events.length;i++) {
 				if (events[i].subtype === 'noteOn') {
 					evt = events[i];
-					step += evt.deltaTime/48; // TODO: FIGURE OUT HOW THE DELTA TIME STEPS WORK
+					step += evt.deltaTime; // TODO: FIGURE OUT HOW THE DELTA TIME STEPS WORK
 					noteTimePairs.push([uniqueNotes.indexOf(evt.noteNumber), step]);
+					var c = "["+uniqueNotes.indexOf(evt.noteNumber).toString() + "," + step.toString() +"]"+",";
+					str +=c;
 				}
 			}
-
-			// for (var i=0;i<noteTimePairs.length;i++) {
-			// 	console.log(noteTimePairs[i]);
-			// }
+			console.log(str);
 		};
 	</script>
 <body>
