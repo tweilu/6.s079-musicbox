@@ -35,9 +35,11 @@
 
 		var processMidi = function(midiFile) {
 			console.log(midiFile['header']['ticksPerBeat']);
+			// console.log(midiFile['tracks'][0]);
+			// console.log(midiFile['tracks'][1]);
 			var allNotes = [];
 			var noteTimePairs = [];
-			var events = midiFile['tracks'][1];
+			var events = midiFile['tracks'][0];
 			
 			// Get the note numbers for the comb
 			for (var i=0;i<events.length;i++) {
