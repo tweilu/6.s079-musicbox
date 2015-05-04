@@ -23,7 +23,7 @@ vspacing = height/numnotes;
 
 module makeCylinder() {
     union() {
-        cylinder(h = height, r = radius, $fn=128);
+        cylinder(h = height, r = radius, $fn=256);
         for (i = [0:len(notes)-1]) {
             pinnum = notes[i][0];
             time = notes[i][1];
@@ -51,6 +51,7 @@ module completeCylinder() {
             makeCylinder();
             cube(size=[6.73519,6.73519,12.7], center=true);
         }
+        $fn=64;
         translate([0,0,height]) cylinder(h=4.7625,r=4.7625);
     }
 }
