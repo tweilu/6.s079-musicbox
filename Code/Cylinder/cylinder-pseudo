@@ -1,0 +1,19 @@
+horizontalSpacing = 2*PI*radius/songLength;
+
+function placePins() {
+  pins = [];
+  for (i=0; i<notes.length; i++) {
+    tineNumber = notes[0];
+    time = notes[1];
+    angleOffset = horizontalSpacing*time/radius;
+    x = cos(angle)*radius;
+    y = sin(angle)*radius;
+
+    p = pin();
+    p = p.rotateZ(angle);
+    p = p.translate([x,y,vspacing/2+pinnum*vspacing]);
+
+    pins.push(p);
+  }
+  return pins;
+}
