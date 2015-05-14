@@ -2,6 +2,7 @@
 Final project for 6.S079 Computational Fabrication.
 
 Final Report: Documentation/6.S079FinalReport.pdf
+
 Web application: https://tweilu.scripts.mit.edu/musicbox/
 
 Directory Structure
